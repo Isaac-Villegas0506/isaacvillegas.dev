@@ -1,5 +1,9 @@
+"use client";
+
 import { BookOpen, Users, Flag, Briefcase, Code, Database, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { motion } from "framer-motion";
 
 const About = () => {
     return (
@@ -70,24 +74,49 @@ const About = () => {
                     </div>
 
                     {/* 3. Stats */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 border-y border-border/50 py-12">
-                        <div className="text-center space-y-1">
-                            <div className="text-4xl font-bold text-foreground">24+</div>
-                            <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium">Meses de experiencia</div>
-                        </div>
-                        <div className="text-center space-y-1">
-                            <div className="text-4xl font-bold text-foreground">10+</div>
-                            <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium">Proyectos de aprendizaje</div>
-                        </div>
-                        <div className="text-center space-y-1">
-                            <div className="text-4xl font-bold text-foreground">12+</div>
-                            <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium">Tecnologías Dominadas</div>
-                        </div>
-                        <div className="text-center space-y-1">
-                            <div className="text-4xl font-bold text-foreground">50+</div>
-                            <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium">Code contributions</div>
-                        </div>
-                    </div>
+                    <motion.div
+                        className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 border-y border-border/50 py-12"
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        variants={{
+                            hidden: { opacity: 0 },
+                            visible: {
+                                opacity: 1,
+                                transition: {
+                                    staggerChildren: 0.1,
+                                },
+                            },
+                        }}
+                    >
+                        {[
+                            { value: "24+", label: "Meses de experiencia" },
+                            { value: "10+", label: "Proyectos de aprendizaje" },
+                            { value: "12+", label: "Tecnologías Dominadas" },
+                            { value: "50+", label: "Code contributions" },
+                        ].map((stat, index) => (
+                            <motion.div
+                                key={stat.label}
+                                className="text-center space-y-1 hover-scale cursor-default"
+                                variants={{
+                                    hidden: { opacity: 0, scale: 0.5 },
+                                    visible: { opacity: 1, scale: 1 },
+                                }}
+                                whileHover={{ scale: 1.1, y: -5 }}
+                            >
+                                <motion.div
+                                    className="text-4xl font-bold text-foreground"
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.1, duration: 0.5, type: "spring" }}
+                                >
+                                    {stat.value}
+                                </motion.div>
+                                <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium">{stat.label}</div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
 
                     {/* 4. What I seek */}
                     <div className="space-y-6">

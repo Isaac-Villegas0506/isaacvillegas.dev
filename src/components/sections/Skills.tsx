@@ -1,37 +1,69 @@
+"use client";
+
 import { Star, Code, Server, Bot, Database as DbIcon, Terminal } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface SkillCardProps {
     category: string;
     icon: React.ReactNode;
     skills: { name: string; stars: number; desc: string }[];
+    index: number;
 }
 
-const SkillCard = ({ category, icon, skills }: SkillCardProps) => (
-    <div className="bg-card border border-border hover:border-primary/50 transition-colors rounded-xl p-6 space-y-6">
+const SkillCard = ({ category, icon, skills, index }: SkillCardProps) => (
+    <motion.div
+        className="bg-card border border-border hover:border-primary/50 transition-all duration-300 rounded-xl p-6 space-y-6 hover-lift hover-glow"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: index * 0.1, duration: 0.5 }}
+        whileHover={{ y: -5 }}
+    >
         <div className="flex items-center gap-3 border-b border-border/50 pb-4">
-            <div className="p-2 bg-primary/10 rounded-lg text-primary">{icon}</div>
+            <motion.div
+                className="p-2 bg-primary/10 rounded-lg text-primary"
+                whileHover={{ rotate: 360, scale: 1.1 }}
+                transition={{ duration: 0.5 }}
+            >
+                {icon}
+            </motion.div>
             <h3 className="font-semibold text-lg text-foreground">{category}</h3>
         </div>
         <div className="space-y-5">
-            {skills.map((skill) => (
-                <div key={skill.name} className="space-y-1.5">
+            {skills.map((skill, skillIndex) => (
+                <motion.div
+                    key={skill.name}
+                    className="space-y-1.5"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 + skillIndex * 0.05 }}
+                >
                     <div className="flex justify-between items-center">
                         <span className="font-medium text-sm text-foreground">{skill.name}</span>
                         <div className="flex gap-0.5">
                             {[...Array(5)].map((_, i) => (
-                                <Star
+                                <motion.div
                                     key={i}
-                                    size={12}
-                                    className={i < skill.stars ? "fill-primary text-primary" : "fill-muted text-muted"}
-                                />
+                                    initial={{ scale: 0 }}
+                                    whileInView={{ scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.1 + skillIndex * 0.05 + i * 0.03 }}
+                                    whileHover={{ scale: 1.2, rotate: 72 }}
+                                >
+                                    <Star
+                                        size={12}
+                                        className={i < skill.stars ? "fill-primary text-primary" : "fill-muted text-muted"}
+                                    />
+                                </motion.div>
                             ))}
                         </div>
                     </div>
                     <p className="text-xs text-muted-foreground">{skill.desc}</p>
-                </div>
+                </motion.div>
             ))}
         </div>
-    </div>
+    </motion.div>
 );
 
 const Skills = () => {
@@ -90,8 +122,8 @@ const Skills = () => {
 
                 {/* Section A: Core Techs */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-                    {coreSkills.map((section) => (
-                        <SkillCard key={section.category} {...section} />
+                    {coreSkills.map((section, index) => (
+                        <SkillCard key={section.category} {...section} index={index} />
                     ))}
                 </div>
 
