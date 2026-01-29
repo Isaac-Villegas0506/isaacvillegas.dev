@@ -13,8 +13,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Isaac Villegas  | Desarrollador Web Junior", // Placeholder name, user can change
-  description: "Desarrollador Web Junior buscando un hogar profesional para crecer y aportar valor a largo plazo.",
+  title: "Isaac Villegas | Ingeniero de Software Junior",
+  description: "Ingeniero de Software Junior buscando un hogar profesional para crecer y aportar valor a largo plazo.",
 };
 
 export default function RootLayout({

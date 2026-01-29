@@ -66,7 +66,7 @@ const Contact = () => {
                                     <Linkedin size={18} /> LinkedIn
                                 </a>
                                 <a
-                                    href="https://github.com/isaacvillegas"
+                                    href="https://github.com/Isaac-Villegas0506"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className={buttonVariants({ variant: "outline", className: "gap-2 w-full sm:w-auto" })}

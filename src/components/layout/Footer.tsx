@@ -78,7 +78,7 @@ const Footer = () => {
                         <h3 className="text-lg font-semibold text-foreground">Conectar</h3>
                         <div className="flex flex-col gap-3">
                             <a
-                                href="https://github.com/isaacvillegas"
+                                href="https://github.com/Isaac-Villegas0506"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors group"

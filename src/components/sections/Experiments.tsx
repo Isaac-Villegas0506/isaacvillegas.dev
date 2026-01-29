@@ -75,16 +75,16 @@ const Experiments = () => {
                     ))}
 
                     {/* Open Source Card */}
-                    <div className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 hover:border-primary/50 transition-all p-6 rounded-xl flex flex-col justify-center items-center text-center space-y-4">
+                    <a href="https://github.com/Isaac-Villegas0506" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 hover:border-primary/50 transition-all p-6 rounded-xl flex flex-col justify-center items-center text-center space-y-4 cursor-pointer hover:shadow-lg hover:bg-primary/5">
                         <Github size={40} className="text-primary" />
                         <h3 className="font-bold text-foreground">Contribuciones Open Source</h3>
                         <p className="text-sm text-muted-foreground">
                             He contribuido con bug fixes y docs a librerías que uso. Entiendo el valor del ecosistema.
                         </p>
-                    </div>
+                    </a>
                 </div>
             </div>
-        </section>
+        </section >
     );
 };
 

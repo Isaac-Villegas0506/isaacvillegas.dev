@@ -4,11 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/hooks/use-theme";
 import { Github, Linkedin, Moon, Sun, Menu, X } from "lucide-react";
-import { cn } from "@/lib/utils"; // Assuming cn is available, usually provided in these templates. If not I will create it.
-
-// Since I haven't checked for @/lib/utils, I will define a simple helper or assume it exists if I saw clsx/tailwind-merge in package.json
-// Just in case, I'll inline the class usage or CREATE lib/utils first. `clsx` and `tailwind-merge` are in package.json.
-// I'll create `src/lib/utils.ts` in the next step to be safe.
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
     const { theme, toggleTheme } = useTheme();
@@ -24,18 +20,18 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: "Home", href: "#hero" },
+        { name: "Inicio", href: "#hero" },
         { name: "Mi Historia", href: "#about" },
+        { name: "Experiencia", href: "#experience" },
         { name: "Proyectos", href: "#projects" },
-        { name: "Visión", href: "#vision" },
         { name: "Conversemos", href: "#contact" },
     ];
 
     return (
         <header
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-                    ? "bg-background/80 backdrop-blur-md border-b border-border/40 shadow-sm"
-                    : "bg-transparent"
+                ? "bg-background/80 backdrop-blur-md border-b border-border/40 shadow-sm"
+                : "bg-transparent"
                 }`}
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,7 +42,7 @@ const Navbar = () => {
                             Isaac Villegas
                         </span>
                         <span className="text-[10px] text-muted-foreground uppercase tracking-wider hidden sm:block">
-                            Building the future
+                            Construyendo el futuro
                         </span>
                     </Link>
 
@@ -77,7 +73,7 @@ const Navbar = () => {
 
                         <div className="flex items-center gap-2 pl-4 border-l border-border/30">
                             <a
-                                href="https://github.com/isaacvillegas"
+                                href="https://github.com/Isaac-Villegas0506"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-muted-foreground hover:text-foreground transition-colors p-2"
@@ -94,13 +90,7 @@ const Navbar = () => {
                             >
                                 <Linkedin size={20} />
                             </a>
-                            <button
-                                onClick={toggleTheme}
-                                className="text-muted-foreground hover:text-foreground transition-colors p-2"
-                                aria-label="Toggle Theme"
-                            >
-                                {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-                            </button>
+
                         </div>
                     </div>
 
@@ -128,23 +118,7 @@ const Navbar = () => {
                                 {link.name}
                             </Link>
                         ))}
-                        <div className="flex items-center justify-between pt-4">
-                            <span className="text-sm text-muted-foreground">Tema</span>
-                            <button
-                                onClick={toggleTheme}
-                                className="flex items-center gap-2 text-foreground"
-                            >
-                                {theme === "dark" ? (
-                                    <>
-                                        <Sun size={18} /> Claro
-                                    </>
-                                ) : (
-                                    <>
-                                        <Moon size={18} /> Oscuro
-                                    </>
-                                )}
-                            </button>
-                        </div>
+
                     </nav>
                 </div>
             )}
