@@ -2,7 +2,6 @@
 
 import { Code, Server, Bot, Database as DbIcon, GitBranch, Cpu, Globe, Layers } from "lucide-react";
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/Badge";
 
 interface SkillSection {
     category: string;
@@ -11,6 +10,48 @@ interface SkillSection {
     skills: string[];
     description: string;
 }
+
+// Helper to get brand icons
+const getTechIcon = (tech: string): string | null => {
+    const slugMap: Record<string, string> = {
+        "React": "react",
+        "TypeScript": "typescript",
+        "Tailwind CSS": "tailwindcss",
+        "Framer Motion": "framer",
+        "Vite": "vite",
+        "Next.js": "nextdotjs/white",
+        "Node.js": "nodedotjs",
+        "Express": "express/white",
+        "Laravel": "laravel",
+        "PHP": "php",
+        "MySQL": "mysql",
+        "PostgreSQL": "postgresql",
+        "Redis": "redis",
+        "Python": "python",
+        "Git": "git",
+        "GitHub Actions": "githubactions/white",
+        "Docker": "docker",
+        "Linux": "linux",
+        // Extras
+        "HTML5": "html5",
+        "CSS3": "css3",
+        "JavaScript": "javascript",
+        "Sass": "sass",
+        "Bootstrap": "bootstrap",
+        "Alpine.js": "alpinedotjs",
+    };
+
+    const techLower = tech.toLowerCase();
+
+    // Check direct map
+    if (slugMap[tech]) return `https://cdn.simpleicons.org/${slugMap[tech]}`;
+
+    // Check key includes
+    const foundKey = Object.keys(slugMap).find(key => tech.includes(key));
+    if (foundKey) return `https://cdn.simpleicons.org/${slugMap[foundKey]}`;
+
+    return null; // No icon found
+};
 
 const Skills = () => {
     const skillSections: SkillSection[] = [
@@ -129,7 +170,7 @@ const Skills = () => {
                             className="group relative bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/50 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
                         >
                             <div className="flex items-start justify-between mb-4">
-                                <div className={`p-3 rounded-xl bg-background border border-border/50 ${section.color} group-hover:scale-110 transition-transform duration-300`}>
+                                <div className={`p-3 rounded-xl bg-background border border-border/50 ${section.color} group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
                                     {section.icon}
                                 </div>
                                 <div className="text-xs font-mono text-muted-foreground/50">0{index + 1}</div>
@@ -144,15 +185,25 @@ const Skills = () => {
                             </p>
 
                             <div className="flex flex-wrap gap-2 mt-auto">
-                                {section.skills.map(skill => (
-                                    <Badge
-                                        key={skill}
-                                        variant="secondary"
-                                        className="bg-secondary/50 hover:bg-secondary text-xs sm:text-[10px] font-normal border-transparent"
-                                    >
-                                        {skill}
-                                    </Badge>
-                                ))}
+                                {section.skills.map(skill => {
+                                    const iconUrl = getTechIcon(skill);
+                                    return (
+                                        <div
+                                            key={skill}
+                                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-secondary/40 text-secondary-foreground border border-border/50 text-xs font-medium hover:bg-secondary/80 transition-colors"
+                                        >
+                                            {iconUrl && (
+                                                <img
+                                                    src={iconUrl}
+                                                    alt=""
+                                                    className="w-3.5 h-3.5 opacity-80"
+                                                    onError={(e) => (e.target as HTMLImageElement).style.display = 'none'}
+                                                />
+                                            )}
+                                            {skill}
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </motion.div>
                     ))}

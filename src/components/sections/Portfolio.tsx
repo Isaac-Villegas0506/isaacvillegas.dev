@@ -3,21 +3,54 @@
 import { useState } from "react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { Github, Code2, Globe, Layers, ArrowUpRight, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { Github, Code2, Globe, Layers, ArrowUpRight, ArrowRight, LayoutTemplate } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Category = "Todos" | "Frontend" | "Backend" | "Fullstack" | "Donde más aprendí";
+
+// Helper for Simple Icons (CDN)
+const getTechIcon = (tech: string) => {
+    const slugMap: Record<string, string> = {
+        "Laravel 11": "laravel",
+        "Laravel": "laravel",
+        "Alpine.js": "alpinedotjs",
+        "Redis": "redis",
+        "TailwindCSS": "tailwindcss",
+        "React": "react",
+        "TypeScript": "typescript",
+        "Zustand": "nodedotjs", // Fallback or proxy
+        "Next.js": "nextdotjs",
+        "Node.js": "nodedotjs",
+        "Jobs & Queues": "amazonsqs"
+    };
+
+    const techLower = tech.split(" ")[0].toLowerCase();
+    const slug = slugMap[tech] || slugMap[techLower] || techLower;
+
+    // Fallback URL or generic icon handling could go here, but strict mapping is safer for CDNs
+    return `https://cdn.simpleicons.org/${slug}`;
+};
 
 const projects = [
     {
         id: 1,
-        title: "Sistema de Email Marketing Automated",
+        title: "Email Marketing System",
+        image: "/projects/Email Marketing.png",
         category: ["Backend", "Fullstack", "Donde más aprendí"],
-        status: "En producción",
-        context: "Necesitaba enviar 10k+ emails/hora sin pagar servicios costosos.",
-        stack: ["Laravel", "MySQL", "Python", "Redis"],
-        learning: "Primera vez diseñando un sistema de colas complejo. Aprendí a manejar rate limits y optimizar queries de 5s a 200ms.",
-        links: { demo: "https://emailflow.joyshop.shop/", code: "#" },
+        status: "Demo Interactiva",
+        description: "Simulador de alto rendimiento para envío masivo de correos. Arquitectura asíncrona basada en Event-Driven Design, gestionando colas de procesamiento (Jobs) y fallos SMTP en tiempo real sin bloquear la interfaz del usuario.",
+        stack: ["Laravel 11", "Alpine.js", "Redis", "TailwindCSS"],
+        links: { demo: "http://email.ivillegas.site/", code: "https://github.com/Isaac-Villegas0506/Sistema-de-Email-Marketing-Automatizado" },
+    },
+    {
+        id: 2,
+        title: "DB Canvas (Visual Database Designer)",
+        image: "/projects/db_canvas.png",
+        category: ["Frontend", "Fullstack", "Donde más aprendí"],
+        status: "Demo Interactiva",
+        description: "Motor de diagramación de bases de datos que exporta a SQL. Construido con un sistema de gestión de estado atómico (Zustand) para manipular nodos y conexiones con rendimiento nativo (60fps) incluso en móviles.",
+        stack: ["React", "TypeScript", "Zustand", "TailwindCSS"],
+        links: { demo: "https://dbcanvas.ivillegas.site", code: "https://github.com/Isaac-Villegas0506/db-canvas" },
     },
 ];
 
@@ -29,49 +62,52 @@ const Portfolio = () => {
     );
 
     return (
-        <section id="projects" className="py-24 bg-background relative">
-            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-500/5 blur-[120px] rounded-full pointer-events-none opacity-30" />
+        <section id="projects" className="py-24 bg-background relative overflow-hidden">
+            {/* Background Decorations */}
+            <div className="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 -left-20 w-[500px] h-[500px] bg-purple-500/5 blur-[100px] rounded-full pointer-events-none" />
 
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <div className="container mx-auto px-4 sm:px-6 relative z-10">
+                <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
                     <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/50 border border-border/50 text-xs font-medium text-muted-foreground mb-2"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/40 border border-border/60 text-xs font-semibold text-muted-foreground backdrop-blur-md"
                     >
-                        <Code2 size={14} /> Proyectos Destacados
+                        <LayoutTemplate size={14} className="text-primary" />
+                        <span>Portafolio</span>
                     </motion.div>
 
                     <motion.h2
-                        className="text-4xl md:text-5xl font-bold text-foreground tracking-tight"
-                        initial={{ opacity: 0, y: 10 }}
+                        className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70 tracking-tight"
+                        initial={{ opacity: 0, y: 15 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
                     >
-                        Ingeniería en Acción
+                        Ingeniería y Diseño
                     </motion.h2>
                     <motion.p
                         className="text-lg text-muted-foreground"
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 15 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
                     >
-                        Cada línea de código aquí resuelve un problema real. No son solo proyectos, son soluciones.
+                        Experiencias digitales optimizadas, desde el núcleo hasta el píxel.
                     </motion.p>
                 </div>
 
                 {/* Filters */}
-                <div className="flex flex-wrap justify-center gap-2 mb-12">
+                <div className="flex flex-wrap justify-center gap-3 mb-14">
                     {["Todos", "Frontend", "Backend", "Fullstack", "Donde más aprendí"].map((cat) => (
                         <button
                             key={cat}
                             onClick={() => setFilter(cat as Category)}
-                            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${filter === cat
-                                ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"
-                                : "bg-card border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
+                            className={`px-5 py-2 rounded-full text-xs font-semibold transition-all duration-300 relative overflow-hidden ${filter === cat
+                                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 ring-2 ring-primary/20 scale-105"
+                                : "bg-card border border-border/50 text-muted-foreground hover:border-primary/40 hover:text-foreground hover:bg-secondary/40"
                                 }`}
                         >
                             {cat}
@@ -79,102 +115,135 @@ const Portfolio = () => {
                     ))}
                 </div>
 
-                {/* Grid */}
+                {/* Compact Grid with 3 columns support */}
                 <motion.div
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
-                    variants={{
-                        hidden: { opacity: 0 },
-                        visible: {
-                            opacity: 1,
-                            transition: {
-                                staggerChildren: 0.1,
-                            },
-                        },
-                    }}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto"
+                    layout
                 >
-                    {filteredProjects.map((project, index) => (
-                        <motion.div
-                            key={project.id}
-                            className="group flex flex-col h-full bg-card border border-border/50 hover:border-primary/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
-                            variants={{
-                                hidden: { opacity: 0, y: 50 },
-                                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-                            }}
-                            whileHover={{ y: -5 }}
-                        >
-                            {/* Abstract Project Cover */}
-                            <div className="relative h-52 w-full overflow-hidden bg-gradient-to-br from-secondary/50 to-background border-b border-border/50 group-hover:from-primary/10 group-hover:to-background transition-colors duration-500">
-                                <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity duration-500">
-                                    <Layers size={80} strokeWidth={1} />
-                                </div>
+                    <AnimatePresence mode="popLayout">
+                        {filteredProjects.map((project) => (
+                            <motion.div
+                                key={project.id}
+                                layout
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                transition={{ duration: 0.3 }}
+                                className="group flex flex-col h-full bg-card/40 backdrop-blur-md border border-white/5 hover:border-primary/20 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500"
+                            >
+                                {/* Image Container */}
+                                <div className="relative h-48 w-full overflow-hidden bg-zinc-900/50">
+                                    <div className="absolute inset-0 bg-black/10 z-10 group-hover:bg-transparent transition-colors duration-500" />
 
-                                <div className="absolute top-4 right-4">
-                                    <Badge variant={project.status === "En producción" ? "default" : "secondary"} className="backdrop-blur-md bg-background/50 hover:bg-background/80 shadow-sm">
-                                        {project.status === "En producción" && <span className="mr-1.5 inline-block w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />}
-                                        {project.status}
-                                    </Badge>
-                                </div>
-                                <div className="absolute bottom-4 left-4 right-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar mask-gradient">
-                                    {project.stack.map(tech => (
-                                        <Badge key={tech} variant="secondary" className="text-[10px] bg-background/80 backdrop-blur border text-foreground/80 font-medium whitespace-nowrap">
-                                            {tech}
+                                    {project.image ? (
+                                        <motion.img
+                                            src={project.image}
+                                            alt={project.title}
+                                            className="absolute inset-0 w-full h-full object-cover object-top"
+                                            whileHover={{ scale: 1.1 }}
+                                            transition={{ duration: 0.7, ease: "easeOut" }}
+                                        />
+                                    ) : (
+                                        <div className="absolute inset-0 flex items-center justify-center text-zinc-700">
+                                            <Layers size={48} strokeWidth={1} />
+                                        </div>
+                                    )}
+
+                                    {/* Floating Status Badge */}
+                                    <div className="absolute top-3 right-3 z-20">
+                                        <Badge className="bg-black/60 backdrop-blur-md border border-white/10 text-white shadow-lg text-[10px] uppercase tracking-wider font-bold px-2 py-1">
+                                            {project.status === "Demo Interactiva" && (
+                                                <span className="mr-1.5 w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse inline-block" />
+                                            )}
+                                            {project.status.replace("Demo ", "")}
                                         </Badge>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="p-6 flex flex-col flex-grow">
-                                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors flex items-center justify-between">
-                                    {project.title}
-                                    <ArrowUpRight size={18} className="opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                                </h3>
-
-                                <div className="space-y-4 mb-6 flex-grow">
-                                    <div className="bg-secondary/20 p-3 rounded-lg border border-border/30">
-                                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">El Desafío</p>
-                                        <p className="text-sm text-foreground/80">{project.context}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">Solución & Aprendizaje</p>
-                                        <p className="text-sm text-muted-foreground">{project.learning}</p>
                                     </div>
                                 </div>
 
-                                <div className="flex gap-3 pt-4 border-t border-border/50 mt-auto">
-                                    <a
-                                        href={project.links.demo}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex-1 flex items-center justify-center gap-2 text-sm font-medium py-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-95"
-                                    >
-                                        <Globe size={16} /> Ver Demo
-                                    </a>
-                                    <a
-                                        href={project.links.code}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex-1 flex items-center justify-center gap-2 text-sm font-medium py-2.5 rounded-xl border border-border hover:border-foreground/20 hover:bg-secondary text-foreground transition-all active:scale-95"
-                                    >
-                                        <Github size={16} /> Código
-                                    </a>
+                                {/* Content */}
+                                <div className="p-5 flex flex-col flex-grow relative">
+                                    <div className="mb-3">
+                                        <div className="flex items-start justify-between gap-4 mb-2">
+                                            <h3 className="text-lg font-bold text-foreground leading-tight group-hover:text-primary transition-colors duration-300">
+                                                {project.title}
+                                            </h3>
+                                            <motion.a
+                                                href={project.links.demo}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                whileHover={{ scale: 1.1, rotate: 45 }}
+                                                className="text-muted-foreground hover:text-primary transition-colors"
+                                            >
+                                                <ArrowUpRight size={18} />
+                                            </motion.a>
+                                        </div>
+
+                                        {/* Full Description with no clamp */}
+                                        <p className="text-sm text-muted-foreground leading-relaxed">
+                                            {project.description}
+                                        </p>
+                                    </div>
+
+                                    {/* Tech Stack with Icons */}
+                                    <div className="flex flex-wrap gap-2 mb-6 mt-auto pt-4 border-t border-border/30">
+                                        {project.stack.map((tech) => (
+                                            <div
+                                                key={tech}
+                                                className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-medium bg-secondary/50 text-secondary-foreground border border-border/50 transition-colors hover:bg-secondary hover:border-primary/20"
+                                                title={tech}
+                                            >
+                                                <img
+                                                    src={getTechIcon(tech)}
+                                                    alt=""
+                                                    className="w-3 h-3 opacity-70 group-hover:opacity-100 transition-opacity"
+                                                    onError={(e) => {
+                                                        (e.target as HTMLImageElement).style.display = 'none';
+                                                    }}
+                                                />
+                                                <span>{tech}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Actions */}
+                                    <div className="flex items-center gap-3">
+                                        <motion.a
+                                            whileHover={{ scale: 1.02 }}
+                                            whileTap={{ scale: 0.98 }}
+                                            href={project.links.demo}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg bg-primary text-primary-foreground text-xs font-semibold shadow-md shadow-primary/20 hover:bg-primary/90 transition-all"
+                                        >
+                                            <Globe size={14} />
+                                            Live Demo
+                                        </motion.a>
+                                        <motion.a
+                                            whileHover={{ scale: 1.02 }}
+                                            whileTap={{ scale: 0.98 }}
+                                            href={project.links.code}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex-1 flex items-center justify-center gap-2 h-9 rounded-lg border border-border/60 bg-secondary/30 text-secondary-foreground text-xs font-semibold hover:bg-secondary/60 hover:border-primary/30 transition-all"
+                                        >
+                                            <Github size={14} />
+                                            Code
+                                        </motion.a>
+                                    </div>
                                 </div>
-                            </div>
-                        </motion.div>
-                    ))}
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
                 </motion.div>
 
-                <div className="mt-20 text-center">
+                <div className="mt-16 text-center">
                     <Button
                         variant="ghost"
-                        size="lg"
-                        className="group gap-2 hover:bg-transparent"
+                        className="group text-muted-foreground hover:text-foreground"
                         onClick={() => window.open("https://github.com/Isaac-Villegas0506", "_blank")}
                     >
-                        <span className="text-muted-foreground group-hover:text-foreground transition-colors">Explorar más repositorios en GitHub</span>
-                        <ArrowRight size={18} className="text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                        Ver más proyectos en GitHub
+                        <ArrowRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
                     </Button>
                 </div>
             </div>

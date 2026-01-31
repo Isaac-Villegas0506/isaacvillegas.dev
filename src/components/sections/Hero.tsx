@@ -7,7 +7,23 @@ import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 
 // Dynamically import the interactive component to avoid SSR issues with Three.js
+// Dynamically import the interactive component to avoid SSR issues with Three.js
 const InteractiveGlobe = dynamic(() => import("@/components/ui/InteractiveGlobe"), { ssr: false });
+
+// Helper to get brand icons
+const getTechIcon = (tech: string): string | null => {
+    const slugMap: Record<string, string> = {
+        "React + Vite": "react", // Main tech
+        "JavaScript ES6+": "javascript",
+        "Node.js": "nodedotjs",
+        "Laravel": "laravel",
+        "Python": "python",
+        "SQL": "mysql", // Representative icon
+        "Git": "git",
+    };
+
+    return slugMap[tech] ? `https://cdn.simpleicons.org/${slugMap[tech]}` : null;
+};
 
 const Hero = () => {
     return (
@@ -18,10 +34,7 @@ const Hero = () => {
             {/* Background Gradient */}
             <div className="absolute inset-0 -z-20 bg-gradient-to-b from-background via-background to-background/50" />
 
-            {/* Interactive Background (Right Side mainly visible on desktop) */}
-            <div className="absolute top-0 right-0 w-full h-full md:w-1/2 -z-10 opacity-60 md:opacity-100 mix-blend-screen">
-                <InteractiveGlobe />
-            </div>
+
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -38,8 +51,7 @@ const Hero = () => {
                         >
                             <Terminal size={12} className="text-primary" />
                             <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                                Estudiante de Ingeniería de Software y Entusiasta de la IA
-                            </span>
+                                Estudiante de Ingeniería de Software  </span>
                         </motion.div>
 
                         {/* Headline */}
@@ -69,6 +81,7 @@ const Hero = () => {
                         </div>
 
                         {/* Tech Stack Pills - Left Aligned */}
+                        {/* Tech Stack Pills - Left Aligned */}
                         <motion.div
                             className="flex flex-wrap justify-start gap-3 pt-2"
                             initial={{ opacity: 0, y: 10 }}
@@ -83,17 +96,28 @@ const Hero = () => {
                                 "Python",
                                 "SQL",
                                 "Git",
-                            ].map((tech, index) => (
-                                <motion.div
-                                    key={tech}
-                                    whileHover={{ scale: 1.05, y: -2 }}
-                                    className="cursor-default"
-                                >
-                                    <Badge variant="secondary" className="px-3 py-1 text-sm bg-secondary/40 backdrop-blur-sm border-white/5 hover:border-primary/20 hover:bg-secondary/60 transition-all font-normal text-muted-foreground hover:text-foreground">
-                                        {tech}
-                                    </Badge>
-                                </motion.div>
-                            ))}
+                            ].map((tech) => {
+                                const icon = getTechIcon(tech);
+                                return (
+                                    <motion.div
+                                        key={tech}
+                                        whileHover={{ scale: 1.05, y: -2 }}
+                                        className="cursor-default"
+                                    >
+                                        <Badge variant="secondary" className="px-3 py-1.5 text-sm bg-secondary/40 backdrop-blur-sm border-white/5 hover:border-primary/20 hover:bg-secondary/60 transition-all font-normal text-muted-foreground hover:text-foreground flex items-center gap-2">
+                                            {icon && (
+                                                <img
+                                                    src={icon}
+                                                    alt=""
+                                                    className="w-4 h-4 opacity-70"
+                                                    onError={(e) => (e.target as HTMLImageElement).style.display = 'none'}
+                                                />
+                                            )}
+                                            {tech}
+                                        </Badge>
+                                    </motion.div>
+                                );
+                            })}
                         </motion.div>
 
                         {/* CTAs - Left Aligned */}
@@ -122,22 +146,9 @@ const Hero = () => {
 
                     </div>
 
-                    {/* Right Column: Interaction Placeholder (The visual heavy lifting is done by the absolute positioned globe) */}
-                    <div className="hidden lg:block relative h-full min-h-[500px]">
-                        {/* We use an empty container here because the InteractiveGlobe is absolute positioned 
-                            to allow it to spill over if needed, but this div keeps the grid structure intact */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 1, duration: 1 }}
-                            className="absolute inset-0 flex items-center justify-center p-8 pointer-events-none"
-                        >
-                            <div className="text-center p-6 rounded-2xl bg-background/10 backdrop-blur-sm border border-white/5 max-w-xs">
-                                <p className="text-xs font-mono text-muted-foreground">
-                                    Interactúa con el universo 3D
-                                </p>
-                            </div>
-                        </motion.div>
+                    {/* Right Column: Interactive Element (visible en todas las pantallas) */}
+                    <div className="flex relative h-[400px] lg:h-[500px] items-center justify-center mt-8 lg:mt-0">
+                        <InteractiveGlobe />
                     </div>
 
                 </div>
